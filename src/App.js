@@ -18,39 +18,39 @@ function App() {
   const [hidden, setHidden] = useState(true)
   return (
     <HomeWrapper className="App">
-      <Container>
-        <Navbar className="navbar" expandSm dark>
+      <Navbar className="navbar" expandSm dark>
+        <Nav>
+          <NavbarLink dark brand href="#">
+            CoinWorld
+          </NavbarLink>
           <Nav>
-            <NavbarLink dark brand href="#">
-              CoinWorld
-            </NavbarLink>
-            <Nav>
-              <Button
-                dark
-                outline
-                toggleCollapse
-                expandSm
-                onClick={() => setHidden(!hidden)}
-              >
-                <span>&#9776;</span>
-              </Button>
-            </Nav>
+            <Button
+              dark
+              outline
+              toggleCollapse
+              expandSm
+              onClick={() => setHidden(!hidden)}
+            >
+              <span>&#9776;</span>
+            </Button>
           </Nav>
-          <Nav collapse expandSm hidden={hidden}>
-            <NavbarLink dark active>
-              Trending
-            </NavbarLink>
-            <NavbarLink dark href="#">
-              Link
-            </NavbarLink>
-            <NavbarLink dark href="#">
-              Link
-            </NavbarLink>
-            <NavbarLink dark disabled href="#">
-              Disabled
-            </NavbarLink>
-          </Nav>
-        </Navbar>
+        </Nav>
+        <Nav collapse expandSm hidden={hidden}>
+          <NavbarLink dark active>
+            Trending
+          </NavbarLink>
+          <NavbarLink dark href="#">
+            Link
+          </NavbarLink>
+          <NavbarLink dark href="#">
+            Link
+          </NavbarLink>
+          <NavbarLink dark disabled href="#">
+            Disabled
+          </NavbarLink>
+        </Nav>
+      </Navbar>
+      <Container>
         <h1>Top 100 Cryptocurrencies Today</h1>
         <CoinList />
       </Container>
