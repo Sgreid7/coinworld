@@ -3,6 +3,10 @@ import axios from "axios"
 import { Table, Tr } from "styled-bootstrap-components"
 import styled from "styled-components"
 
+import Coin from "./coin"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faStar } from "@fortawesome/free-regular-svg-icons"
+
 const Coinlist = () => {
   const [coins, setCoins] = useState([])
 
@@ -50,24 +54,16 @@ const Coinlist = () => {
           {coins &&
             coins.map((coin, index) => {
               return (
-                <tr key={coin.id} className="coin">
-                  <th></th>
-                  <th>{index + 1}</th>
-                  <th>{coin.name}</th>
-                  <th className="symbol">{coin.symbol}</th>
-                  <th>
-                    $
-                    {coin.current_price.toLocaleString(undefined, {
-                      maximumFractionDigits: 2,
-                    })}
-                  </th>
-                  <th>{coin.market_cap.toLocaleString()}</th>
-                  <th>
-                    {coin.circulating_supply.toLocaleString(undefined, {
-                      maximumFractionDigits: 0,
-                    })}
-                  </th>
-                </tr>
+                <Coin
+                  key={coin.id}
+                  index={index}
+                  img={coin.image}
+                  name={coin.name}
+                  symbol={coin.symbol}
+                  price={coin.current_price}
+                  cap={coin.market_cap}
+                  supply={coin.circulating_supply}
+                />
               )
             })}
         </tbody>
@@ -81,23 +77,11 @@ export default Coinlist
 const ListWrapper = styled.div`
   & .coin-table {
     font-family: "Montserrat", sans-serif;
+    margin: 0;
 
     & th.heading {
       background: #343a40;
       color: #9b9b9b;
-    }
-
-    & tbody {
-      & .coin {
-        & th {
-          color: #9b9b9b;
-          font-size: 0.9rem;
-
-          &.symbol {
-            text-transform: uppercase;
-          }
-        }
-      }
     }
   }
 `

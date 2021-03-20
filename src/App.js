@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react"
-import logo from "./logo.svg"
 import "./App.css"
-import axios from "axios"
 import {
   Container,
   Navbar,
   NavbarLink,
   Nav,
   Button,
+  Form,
+  FormInline,
+  FormControl,
 } from "styled-bootstrap-components"
 import styled from "styled-components"
 import "./index.css"
@@ -36,19 +37,25 @@ function App() {
           </Nav>
         </Nav>
         <Nav collapse expandSm hidden={hidden}>
-          <NavbarLink dark active>
-            Trending
+          <NavbarLink dark>Trending</NavbarLink>
+          <NavbarLink dark href="#">
+            Exchanges
           </NavbarLink>
           <NavbarLink dark href="#">
             Link
-          </NavbarLink>
-          <NavbarLink dark href="#">
-            Link
-          </NavbarLink>
-          <NavbarLink dark disabled href="#">
-            Disabled
           </NavbarLink>
         </Nav>
+        <div>
+          <input
+            className="form-control me-2"
+            type="search"
+            placeholder="Search..."
+            aria-label="Search"
+          />
+          <button className="btn btn-outline-success" type="submit">
+            Search
+          </button>
+        </div>
       </Navbar>
       <Container>
         <h1>Top 100 Cryptocurrencies Today</h1>
