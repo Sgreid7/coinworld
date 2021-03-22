@@ -3,38 +3,54 @@ import axios from "axios"
 import { Table, Tr } from "styled-bootstrap-components"
 import styled from "styled-components"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faStar } from "@fortawesome/free-regular-svg-icons"
+// import { faStar } from "@fortawesome/free-regular-svg-icons"
+import { faStar } from "@fortawesome/free-solid-svg-icons"
 
-const Coin = ({ index, img, name, symbol, price, cap, supply }) => {
-  useEffect(() => {
-    console.log(price, cap, supply)
-  }, [])
+const Coin = ({ index, coins, coin }) => {
+  const [favorite, setFavorite] = useState(false)
+
+  const favoriteCoin = (coin) => {
+    if (!favorite) {
+      setFavorite(true)
+    } else {
+      setFavorite(false)
+    }
+  }
+  // useEffect(() => {
+  // }, [])
   return (
     <CoinWrapper>
-      <th scope="col" className="heading">
-        <button type="button" className="favorite-btn">
-          <FontAwesomeIcon icon={faStar} className="icon" />
+      <th>
+        <button
+          type="button"
+          className="favorite-btn"
+          onClick={() => favoriteCoin(coin, index)}
+        >
+          <FontAwesomeIcon
+            icon={faStar}
+            className={`icon ${favorite ? "favorite" : "not-favorited"}`}
+          />
         </button>
       </th>
       <th>{index + 1}</th>
       <th className="name">
         <div className="main-cell">
           <div>
-            <img src={img} alt={name} />
+            <img src={coin.image} alt={coin.name} />
           </div>
-          <div className="coin-name">{name}</div>
+          <div className="coin-name">{coin.name}</div>
         </div>
       </th>
-      <th className="symbol">{symbol}</th>
+      <th className="symbol">{coin.symbol}</th>
       <th>
         $
-        {price.toLocaleString(undefined, {
+        {coin.current_price.toLocaleString(undefined, {
           maximumFractionDigits: 6,
         })}
       </th>
-      <th>${cap.toLocaleString()}</th>
+      <th>${coin.market_cap.toLocaleString()}</th>
       <th>
-        {supply.toLocaleString(undefined, {
+        {coin.circulating_supply.toLocaleString(undefined, {
           maximumFractionDigits: 0,
         })}
       </th>
@@ -49,21 +65,35 @@ const CoinWrapper = styled.tr`
     color: #9b9b9b;
     font-size: 0.9rem;
 
+    & .favorite-btn {
+      background: none;
+      outline: none;
+      border: none;
+      cursor: pointer;
+      color: #9b9b9b;
+
+      & .favorite {
+        color: #fc6;
+      }
+    }
+
     & .icon {
       cursor: pointer;
     }
 
     &.name {
       color: #fff;
-      width: 15%;
+      width: 20%;
 
       & div {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: flex-start;
 
         & .coin-name {
-          text-align: right;
+          text-align: left;
+          margin-left: 1.25rem;
+          font-size: 0.8rem;
         }
       }
 
@@ -75,6 +105,7 @@ const CoinWrapper = styled.tr`
 
     &.symbol {
       text-transform: uppercase;
+      font-size: 0.7rem;
     }
   }
 `

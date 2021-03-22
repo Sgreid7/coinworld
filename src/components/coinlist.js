@@ -7,7 +7,7 @@ import Coin from "./coin"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faStar } from "@fortawesome/free-regular-svg-icons"
 
-const Coinlist = () => {
+const Coinlist = ({ searchCoins }) => {
   const [coins, setCoins] = useState([])
 
   const getCoins = () => {
@@ -18,6 +18,7 @@ const Coinlist = () => {
       .then((res) => {
         console.log(res)
         if (res.data) setCoins(res.data)
+        coins.forEach((coin) => (coin.favorited = false))
       })
   }
 
@@ -54,16 +55,7 @@ const Coinlist = () => {
           {coins &&
             coins.map((coin, index) => {
               return (
-                <Coin
-                  key={coin.id}
-                  index={index}
-                  img={coin.image}
-                  name={coin.name}
-                  symbol={coin.symbol}
-                  price={coin.current_price}
-                  cap={coin.market_cap}
-                  supply={coin.circulating_supply}
-                />
+                <Coin key={coin.id} index={index} coin={coin} coins={coins} />
               )
             })}
         </tbody>
@@ -82,6 +74,8 @@ const ListWrapper = styled.div`
     & th.heading {
       background: #343a40;
       color: #9b9b9b;
+      border-color: #dc143c;
+      border-bottom: 1px solid #dc143c;
     }
   }
 `
