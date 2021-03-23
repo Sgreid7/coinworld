@@ -3,28 +3,32 @@ import axios from "axios"
 import { Table, Tr } from "styled-bootstrap-components"
 import styled from "styled-components"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-// import { faStar } from "@fortawesome/free-regular-svg-icons"
 import { faStar } from "@fortawesome/free-solid-svg-icons"
 
-const Coin = ({ index, coins, coin }) => {
+const Coin = (props) => {
+  // { index, coins, coin }
   const [favorite, setFavorite] = useState(false)
+  const [favoritesList, setFavoritesList] = useState([])
 
   const favoriteCoin = (coin) => {
     if (!favorite) {
       setFavorite(true)
+      setFavoritesList((favoritesList) => [...favoritesList, { coin }])
+      props.onFavoriteCoin(props.coin)
     } else {
       setFavorite(false)
     }
   }
-  // useEffect(() => {
-  // }, [])
+  useEffect(() => {
+    // console.log(props)
+  }, [])
   return (
     <CoinWrapper>
       <th>
         <button
           type="button"
           className="favorite-btn"
-          onClick={() => favoriteCoin(coin, index)}
+          onClick={() => favoriteCoin(props.coin, props.index)}
         >
           <FontAwesomeIcon
             icon={faStar}
@@ -32,25 +36,25 @@ const Coin = ({ index, coins, coin }) => {
           />
         </button>
       </th>
-      <th>{index + 1}</th>
+      <th>{props.index + 1}</th>
       <th className="name">
         <div className="main-cell">
           <div>
-            <img src={coin.image} alt={coin.name} />
+            <img src={props.coin.image} alt={props.coin.name} />
           </div>
-          <div className="coin-name">{coin.name}</div>
+          <div className="coin-name">{props.coin.name}</div>
         </div>
       </th>
-      <th className="symbol">{coin.symbol}</th>
+      <th className="symbol">{props.coin.symbol}</th>
       <th>
         $
-        {coin.current_price.toLocaleString(undefined, {
+        {props.coin.current_price.toLocaleString(undefined, {
           maximumFractionDigits: 6,
         })}
       </th>
-      <th>${coin.market_cap.toLocaleString()}</th>
+      <th>${props.coin.market_cap.toLocaleString()}</th>
       <th>
-        {coin.circulating_supply.toLocaleString(undefined, {
+        {props.coin.circulating_supply.toLocaleString(undefined, {
           maximumFractionDigits: 0,
         })}
       </th>
@@ -63,7 +67,7 @@ export default Coin
 const CoinWrapper = styled.tr`
   & th {
     color: #9b9b9b;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
 
     & .favorite-btn {
       background: none;
@@ -78,6 +82,7 @@ const CoinWrapper = styled.tr`
     }
 
     & .icon {
+      transition: 0.25s ease;
       cursor: pointer;
     }
 

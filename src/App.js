@@ -19,9 +19,7 @@ import CoinList from "./components/coinlist"
 
 function App() {
   const [hidden, setHidden] = useState(true)
-  const searchCoins = () => {
-    console.log("HI")
-  }
+  const searchCoins = () => {}
 
   return (
     <HomeWrapper className="App">

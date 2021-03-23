@@ -4,11 +4,10 @@ import { Table, Tr } from "styled-bootstrap-components"
 import styled from "styled-components"
 
 import Coin from "./coin"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faStar } from "@fortawesome/free-regular-svg-icons"
 
 const Coinlist = ({ searchCoins }) => {
   const [coins, setCoins] = useState([])
+  const [favorites, setFavorites] = useState([])
 
   const getCoins = () => {
     axios
@@ -55,7 +54,15 @@ const Coinlist = ({ searchCoins }) => {
           {coins &&
             coins.map((coin, index) => {
               return (
-                <Coin key={coin.id} index={index} coin={coin} coins={coins} />
+                <Coin
+                  key={coin.id}
+                  index={index}
+                  coin={coin}
+                  coins={coins}
+                  onFavoriteCoin={(newCoin) =>
+                    setFavorites((favorites) => [...favorites, newCoin])
+                  }
+                />
               )
             })}
         </tbody>
