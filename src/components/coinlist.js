@@ -2,12 +2,28 @@ import React, { useState, useEffect } from "react"
 import axios from "axios"
 import { Table, Tr } from "styled-bootstrap-components"
 import styled from "styled-components"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faSortDown } from "@fortawesome/free-solid-svg-icons"
 
 import Coin from "./coin"
 
 const Coinlist = ({ searchCoins }) => {
   const [coins, setCoins] = useState([])
   const [favorites, setFavorites] = useState([])
+
+  const sortCoins = (option) => {
+    switch (option) {
+      case "name":
+        console.log("NAMES")
+        coins.sort((a, b) => {
+          let coinA = a.name.toLowerCase()
+          let coinB = b.name.toLowerCase()
+          if (coinA < coinB) return -1
+          if (coinA > coinB) return 1
+          return 0
+        })
+    }
+  }
 
   const getCoins = () => {
     axios
@@ -33,20 +49,51 @@ const Coinlist = ({ searchCoins }) => {
             <th scope="col" className="heading">
               #
             </th>
-            <th scope="col" className="heading">
-              Coin
+            <th scope="col" className="heading coin">
+              Coin{" "}
+              <span>
+                <FontAwesomeIcon
+                  icon={faSortDown}
+                  className="icon"
+                  onClick={sortCoins("name")}
+                />
+              </span>
             </th>
             <th scope="col" className="heading">
-              Symbol
+              {/* Symbol
+              <span>
+                <FontAwesomeIcon icon={faSortDown} className="icon" onClick={sortCoins(name)} />
+              </span> */}
             </th>
             <th scope="col" className="heading">
               Price
+              <span>
+                <FontAwesomeIcon
+                  icon={faSortDown}
+                  className="icon"
+                  onClick={sortCoins("price")}
+                />
+              </span>
             </th>
             <th scope="col" className="heading">
               Market Cap
+              <span>
+                <FontAwesomeIcon
+                  icon={faSortDown}
+                  className="icon"
+                  onClick={sortCoins("cap")}
+                />
+              </span>
             </th>
             <th scope="col" className="heading">
               Circulating Supply
+              <span>
+                <FontAwesomeIcon
+                  icon={faSortDown}
+                  className="icon"
+                  onClick={sortCoins("supply")}
+                />
+              </span>
             </th>
           </tr>
         </thead>
@@ -83,6 +130,19 @@ const ListWrapper = styled.div`
       color: #9b9b9b;
       border-color: #dc143c;
       border-bottom: 1px solid #dc143c;
+
+      & span {
+        margin: 0 0.35rem;
+
+        & .icon {
+          color: #000;
+          cursor: pointer;
+        }
+      }
+
+      &.coin {
+        text-align: left;
+      }
     }
   }
 `

@@ -15,68 +15,82 @@ import styled from "styled-components"
 import "./index.css"
 import Logo from "./images/logo2.jpg"
 
+import HomeNavbar from "./components/homenavbar"
 import CoinList from "./components/coinlist"
+import Favorites from "./components/favorites"
 
 function App() {
   const [hidden, setHidden] = useState(true)
+  const [isFavorite, setIsFavorite] = useState(false)
   const searchCoins = () => {}
 
   return (
     <HomeWrapper className="App">
-      <Navbar className="navbar" expandSm dark>
-        <Nav>
-          <NavbarLink dark brand href="#">
-            <div>
-              Coin<span className="brand-letter">W</span>orld
-              {/* <img src={Logo} alt="CoinWorld" /> */}
-            </div>
-          </NavbarLink>
+      <Router>
+        <Navbar className="navbar" expandSm dark>
           <Nav>
-            <Button
-              dark
-              outline
-              toggleCollapse
-              expandSm
-              onClick={() => setHidden(!hidden)}
-            >
-              <span>&#9776;</span>
-            </Button>
+            <NavbarLink dark brand href="#">
+              <div>
+                Coin<span className="brand-letter">W</span>orld
+                {/* <img src={Logo} alt="CoinWorld" /> */}
+              </div>
+            </NavbarLink>
+            <Nav>
+              <Button
+                dark
+                outline
+                toggleCollapse
+                expandSm
+                onClick={() => setHidden(!hidden)}
+              >
+                <span>&#9776;</span>
+              </Button>
+            </Nav>
           </Nav>
-        </Nav>
-        <Nav collapse expandSm hidden={hidden}>
-          <Router>
+          <Nav collapse expandSm hidden={hidden}>
             <NavbarLink dark href="/trending">
               Trending
             </NavbarLink>
             <NavbarLink dark href="/exchanges">
               Exchanges
             </NavbarLink>
-            <NavbarLink dark href="/favorites">
+            <NavbarLink
+              dark
+              href="/favorites"
+              onClick={() => setIsFavorite(true)}
+            >
               Favorites
             </NavbarLink>
-            <Switch>
-              <Route path="/trending"></Route>
-              <Route path="/exchanges"></Route>
-              <Route path="/favorites"></Route>
-            </Switch>
-          </Router>
-        </Nav>
-        <div>
-          <input
-            className="form-control me-2 search"
-            type="search"
-            placeholder="I'm looking for..."
-            aria-label="Search"
-          />
-          <button className="search-btn" type="submit" onClick={searchCoins()}>
-            Search
-          </button>
-        </div>
-      </Navbar>
-      <Container>
-        <h1>Top 100 Cryptocurrencies Today</h1>
-        <CoinList onChange={searchCoins()} />
-      </Container>
+          </Nav>
+          <div>
+            <input
+              className="form-control me-2 search"
+              type="search"
+              placeholder="I'm looking for..."
+              aria-label="Search"
+            />
+            <button
+              className="search-btn"
+              type="submit"
+              onClick={searchCoins()}
+            >
+              Search
+            </button>
+          </div>
+        </Navbar>
+        <Container>
+          {/* {} */}
+          <h1>Top 100 Cryptocurrencies Today</h1>
+          <Favorites />
+          <CoinList onChange={searchCoins()} />
+          <Switch>
+            <Route path="/trending"></Route>
+            <Route path="/exchanges"></Route>
+            <Route path="/favorites" component={Favorites}></Route>
+          </Switch>
+          <Favorites />
+        </Container>
+      </Router>
     </HomeWrapper>
   )
 }

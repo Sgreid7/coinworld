@@ -4,6 +4,7 @@ import { Table, Tr } from "styled-bootstrap-components"
 import styled from "styled-components"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faStar } from "@fortawesome/free-solid-svg-icons"
+import { faSortDown } from "@fortawesome/free-solid-svg-icons"
 
 const Coin = (props) => {
   // { index, coins, coin }
